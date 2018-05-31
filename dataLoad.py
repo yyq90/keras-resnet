@@ -7,6 +7,7 @@ import numpy as np
 def dictload(dirpath = 'data/train.txt'):
     f = open(dirpath, "r")
     labelDict = dict()
+    validateDict = dict()
     while True:
         line = f.readline()
         if line:
@@ -15,14 +16,15 @@ def dictload(dirpath = 'data/train.txt'):
             label = line.split(' ')[1].strip()
             key,ext = os.path.splitext(name)
             labelDict[key]=label
+            validateDict[label]=key
         else:
             break
     f.close()
-    return labelDict
+    return labelDict,validateDict
 
 def dataload(img_w=300,img_h=300,val_ratio = 0.95):
     # load y dict
-    labelDict = dictload("d:/git/keras-resnet/data/train.txt")
+    labelDict,validateDict= dictload("d:/git/keras-resnet/data/train.txt")
 
 
     img_dirpath = "d:/git/keras-resnet/data/train"
@@ -56,19 +58,24 @@ def dataload(img_w=300,img_h=300,val_ratio = 0.95):
         if index<trainLen:
             X_train.append(value)
             y_train.append(y[index])
+
         else:
+            #########
+            X_train.append(value)
+            y_train.append(y[index])
+            ##############
             X_val.append(value)
             y_val.append(y[index])
     X_train,y_train,X_val,y_val = np.asarray(X_train), np.asarray(y_train), np.asarray(X_val), np.asarray(y_val)
     X_train = X_train.astype(np.float32)
-    y_train = y_train.astype(np.uint32)
+    y_train = y_train.astype(np.int32)
     X_val = X_val.astype(np.float32)
-    y_val = y_val.astype(np.uint32)
-    y_val = np.reshape(y_val,(1,len(y_val)))
-    y_train = np.reshape(y_train,(1,len(y_train)))
+    y_val = y_val.astype(np.int32)
+    y_val = np.reshape(y_val,(len(y_val),1))
+    y_train = np.reshape(y_train,(len(y_train),1))
 
 
-    return X_train,y_train,X_val,y_val
+    return X_train,y_train-1,X_val,y_val-1
 
-X_train,y_train,X_val,y_val=dataload(50,50)
-print()
+# X_train,y_train,X_val,y_val=dataload(50,50)
+# print()

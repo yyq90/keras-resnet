@@ -13,7 +13,7 @@ from keras.callbacks import ReduceLROnPlateau, CSVLogger, EarlyStopping
 
 import numpy as np
 import resnet
-
+import dataLoad
 
 lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1), cooldown=0, patience=5, min_lr=0.5e-6)
 early_stopper = EarlyStopping(min_delta=0.001, patience=10)
@@ -30,7 +30,8 @@ img_rows, img_cols = 32, 32
 img_channels = 3
 
 # The data, shuffled and split between train and test sets:
-(X_train, y_train), (X_test, y_test) = cifar10.load_data()
+# (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+X_train,y_train,X_test,y_test= dataLoad.dataload(50,50)
 
 # Convert class vectors to binary class matrices.
 Y_train = np_utils.to_categorical(y_train, nb_classes)
