@@ -123,8 +123,8 @@ def dataload(img_w=300,img_h=300,val_ratio = 0.95):
     return X_train,y_train-1,X_val,y_val-1
 def testLoad(img_w=300,img_h=300,val_ratio = 0.95):
     # load y dict
-    picDict= testdictload("c:/tempProjects/keras-resnet/data/test.txt")
-
+    # picDict= testdictload("c:/tempProjects/keras-resnet/data/test.txt")
+    picDict = list()
 
     img_dirpath = "c:/tempProjects/keras-resnet/data/test"
     # X=[]
@@ -141,6 +141,7 @@ def testLoad(img_w=300,img_h=300,val_ratio = 0.95):
             # X.append(img)
             # y.append(labelDict[name])
         X_test.append(img)
+        picDict.append(filename)
     X_test = np.asarray(X_test)
     X_test = X_test.astype(np.float32)
     return X_test,picDict

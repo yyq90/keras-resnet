@@ -94,11 +94,9 @@ else:
     # model.save_weights('my_model_weights_e100.h5')
     X_testr, testDict = dataLoad.testLoad(img_rows, img_cols)
     import cv2
-    X_testr = X_testr.astype('int32')
 
-    cv2.imwrite('test0,jpg',X_testr[0])
     X_testr = X_testr.astype('float32')
-
+    X_testre =  X_testr.astype('int32')
     # subtract mean and normalize
     X_testr -= mean_image
     X_testr /= 128.
@@ -107,6 +105,18 @@ else:
 
     classes = model.predict(X_testr, batch_size=128)
     output=dict()
+    import csv
+
+
+    # 写入数据
+    csvFile = open("res.csv", "w",newline ='')
+    writer = csv.writer(csvFile, dialect = "excel")
+    # 写入的内容都是以列表的形式传入函数
     for index,value in enumerate(classes):
-        output[testDict[index]]=value
+        output[testDict[index]]=np.argmax(value)+1
+        writer.writerow([testDict[index],np.argmax(value)+1])
+        cv2.imwrite('C:/tempProjects/keras-resnet/vali/'+str(np.argmax(value)+1)+'_'+testDict[index]+'.jpg', X_testre[index])
+
+    print("write over")
+
     print()
