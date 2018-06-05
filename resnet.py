@@ -17,6 +17,7 @@ from keras.layers.merge import add
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
+from keras.layers import Dense, Dropout, Embedding, LSTM, Input, Bidirectional, Lambda
 
 
 def _bn_relu(input):
@@ -231,6 +232,13 @@ class ResnetBuilder(object):
         model = Model(inputs=input, outputs=dense)
         return model
 
+
+    # def get_lstm_model():
+    #     input = Input(shape=(maxlen, 128))
+    #     output = Bidirectional(LSTM(64, return_sequences=True))(input)
+    #     return Model(input, output)
+
+
     @staticmethod
     def build_resnet_18(input_shape, num_outputs):
         return ResnetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2])
@@ -250,3 +258,10 @@ class ResnetBuilder(object):
     @staticmethod
     def build_resnet_152(input_shape, num_outputs):
         return ResnetBuilder.build(input_shape, num_outputs, bottleneck, [3, 8, 36, 3])
+
+    # @staticmethod
+    # def build_resnet_lstm(input_shape, num_outputs):
+    #     resnet = ResnetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2])
+    #     lstm =get_lstm_model()(resnet)
+    #     return ResnetBuilder.build(input_shape, num_outputs, basic_block, [2, 2, 2, 2])
+    #
