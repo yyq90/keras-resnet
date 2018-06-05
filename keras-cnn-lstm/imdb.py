@@ -42,12 +42,14 @@ def get_lstm_model():
     output = Bidirectional(LSTM(64, return_sequences=True))(input)
     return Model(input, output)
 
-model = resnet.ResnetBuilder.build_resnet_18((32, 32, 3), 10)
+# model = resnet.ResnetBuilder.build_resnet_18((32, 32, 3), 10)
 
 
 
 
-lstm =get_lstm_model()(embedded)
+
+
+lstm = resnet.ResnetBuilder.build_resnet_lstm()
 resnet = Residual(get_lstm_model())(embedded)
 maxpool = Lambda(lambda x: K.max(x, axis=1, keepdims=False),
                  output_shape=lambda x: (x[0], x[2]))(resnet)
