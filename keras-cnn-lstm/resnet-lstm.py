@@ -8,10 +8,11 @@ img_rows, img_cols = 128, 128
 img_channels = 3
 resnet = resnet.ResnetBuilder.build_resnet_50((img_rows,img_cols,3),img_channels)
 
-resnet_lstm = LSTM(256)(resnet)
+# resnet.add(LSTM(256))
 # resnet.add(LSTM(None,256))
+model = Sequential()
 
-print(resnet_lstm.summary())
+print(resnet.summary())
 # lstm = resnet.ResnetBuilder.build_resnet_lstm((img_rows,img_cols,3),img_channels)
 
 # print(resnet.summary())
