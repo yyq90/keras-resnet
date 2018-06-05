@@ -49,6 +49,12 @@ __reference__
 #issues
 
 [How to use Different Batch Sizes when Training and Predicting with LSTMs](https://machinelearningmastery.com/use-different-batch-sizes-training-predicting-python-keras/)
+
 [What should be the batch for Keras LSTM CNN to process image sequence](https://stackoverflow.com/questions/46187124/what-should-be-the-batch-for-keras-lstm-cnn-to-process-image-sequence)
+
 [How are inputs fed into the LSTM/RNN network in mini-batch method?](https://www.quora.com/How-are-inputs-fed-into-the-LSTM-RNN-network-in-mini-batch-method)
+
 [What is batch size in neural network?](https://stats.stackexchange.com/questions/153531/what-is-batch-size-in-neural-network)
+
+[ValueError: Input 0 is incompatible with layer lstm_13: expected ndim=3, found ndim=4
+](https://stackoverflow.com/questions/44583254/valueerror-input-0-is-incompatible-with-layer-lstm-13-expected-ndim-3-found-n)
