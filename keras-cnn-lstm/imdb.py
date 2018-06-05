@@ -49,7 +49,6 @@ def get_lstm_model():
 
 
 
-lstm = resnet.ResnetBuilder.build_resnet_lstm()
 resnet = Residual(get_lstm_model())(embedded)
 maxpool = Lambda(lambda x: K.max(x, axis=1, keepdims=False),
                  output_shape=lambda x: (x[0], x[2]))(resnet)

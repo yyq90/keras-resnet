@@ -49,12 +49,14 @@ def testdictload(dirpath = 'data/train.txt'):
 
     return picDict
 
-def dataload(img_w=300,img_h=300,val_ratio = 0.95):
+def dataload(img_w=300,img_h=300,val_ratio = 0.95,gray=0):
     # load y dict
-    labelDict,validateList= dictload("c:/tempProjects/keras-resnet/data/train.txt")
+    # labelDict,validateList= dictload("c:/tempProjects/keras-resnet/data/train.txt")
+    labelDict,validateList= dictload("d:/git/keras-resnet/data/train.txt")
 
 
-    img_dirpath = "c:/tempProjects/keras-resnet/data/train"
+    # img_dirpath = "c:/tempProjects/keras-resnet/data/train"
+    img_dirpath = "d:/git/keras-resnet/data/train"
     # X=[]
     # y=[]
     X_train = []
@@ -66,9 +68,12 @@ def dataload(img_w=300,img_h=300,val_ratio = 0.95):
         if ext in ['.jpg']:
             img_filepath = join(img_dirpath, filename)
             img = cv2.imread(img_filepath)
-            # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            if gray==1:
+                img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+                img = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2RGB)
             img = cv2.resize(img, (img_w, img_h))
             img = img.astype(np.float32)
+
             # img /= 255
             # X.append(img)
             # y.append(labelDict[name])
@@ -126,7 +131,8 @@ def testLoad(img_w=300,img_h=300,val_ratio = 0.95):
     # picDict= testdictload("c:/tempProjects/keras-resnet/data/test.txt")
     picDict = list()
 
-    img_dirpath = "c:/tempProjects/keras-resnet/data/test"
+    # img_dirpath = "c:/tempProjects/keras-resnet/data/test"
+    img_dirpath = "d:/git/keras-resnet/data/test"
     # X=[]
     # y=[]
     X_test = []
