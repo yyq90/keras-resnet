@@ -59,7 +59,7 @@ def dataload(img_dirpath= "e:/pic/train",img_w=300,img_h=300,val_ratio = 0.95,gr
     y_val = y_val.astype(np.int32)
     y_val = np.reshape(y_val,(len(y_val),1))
     y_train = np.reshape(y_train,(len(y_train),1))
-    return X_train,y_train
+    return X_train,y_train,labelDict
 
 
 def testLoad(img_w=300,img_h=300,val_ratio = 0.95):

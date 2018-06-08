@@ -1,4 +1,7 @@
 import resnet
+import chainer.functions as F
+
+
 from keras.models import Sequential
 from keras.layers.wrappers import TimeDistributed
 from keras.layers import LSTM

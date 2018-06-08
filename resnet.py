@@ -278,7 +278,7 @@ class ResnetBuilder(object):
         flatten1 = Flatten()(pool2)
 
         # LSTM
-        lstm = LSTM(64)(flatten1)
+        lstm = LSTM(64,return_sequences=True)(flatten1)
 
         flatten2 = Flatten()(lstm)
 
