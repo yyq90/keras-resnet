@@ -2,16 +2,19 @@ from __future__ import division
 
 import six
 from keras.models import Model
+from keras.layers.wrappers import TimeDistributed
 from keras.layers import (
     Input,
     Activation,
     Dense,
-    Flatten
+    Flatten,
+    Reshape
 )
 from keras.layers.convolutional import (
     Conv2D,
     MaxPooling2D,
-    AveragePooling2D
+    AveragePooling2D,
+    AveragePooling1D
 )
 from keras.layers.merge import add
 from keras.layers.normalization import BatchNormalization
@@ -274,16 +277,19 @@ class ResnetBuilder(object):
         block_shape = K.int_shape(block)
         pool2 = AveragePooling2D(pool_size=(block_shape[ROW_AXIS], block_shape[COL_AXIS]),
                                  strides=(1, 1))(block)
-
-        flatten1 = Flatten()(pool2)
-
+        dense = Dense(units=1000, kernel_initializer="he_normal")(pool2)
+        # pool2 =TimeDistributed(pool2)
+        # flatten1 = Flatten()(pool2)
+        reshape =Reshape((1000,1,))(dense)
         # LSTM
-        lstm = LSTM(64)(flatten1)
+        # lstm = LSTM(64, batch_input_shape=(n_batch, X.shape[1], X.shape[2]), stateful=True))
 
-        flatten2 = Flatten()(lstm)
+        lstm = LSTM(64)(reshape)
+
+        # flatten2 = Flatten()(lstm)
 
         dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                      activation="softmax")(flatten2)
+                      activation="softmax")(lstm)
         model = Model(inputs=input, outputs=dense)
         return model
 
