@@ -21,7 +21,7 @@ early_stopper = EarlyStopping(min_delta=0.001, patience=10)
 csv_logger = CSVLogger('resnet__nn.csv')
 batch_size = 32
 nb_classes = 5
-nb_epoch = 20
+nb_epoch = 100
 data_augmentation = True
 
 # input image dimensions
@@ -33,8 +33,9 @@ img_channels = 3
 
 # The data, shuffled and split between train and test sets:
 # (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-X_train,y_train,_= dataLoad2.dataload("e:/pic/train",img_rows,img_cols,gray=0)
-X_test,y_test,_= dataLoad2.dataload("e:/pic/test",img_rows,img_cols,gray=0)
+X_train,y_train,_= dataLoad2.dataload("d:/data/permit/train",img_rows,img_cols,gray=0)
+X_test,y_test,_= dataLoad2.dataload("d:/data/permit/test",img_rows,img_cols,gray=0)
+# X_testr, _, testDict = dataLoad2.dataload("d:/data/permit/test", img_rows, img_cols, gray=0)
 
 # Convert class vectors to binary class matrices.
 Y_train = np_utils.to_categorical(y_train, nb_classes)
@@ -86,7 +87,7 @@ else:
     datagen.fit(X_train)
 
     from keras.models import load_model
-    model.load_weights('my_model_weights_aug_18NET_150.h5')
+    model.load_weights('perimt.h5')
 
     # saver = model.save_weights('my_model_weights_e120_res34_128_128.h5')
 
@@ -96,8 +97,8 @@ else:
     #                     validation_data=(X_test, Y_test),
     #                     epochs=nb_epoch, verbose=1, max_q_size=100,
     #                     callbacks=[lr_reducer, early_stopper, csv_logger])
-    # model.save_weights('my_model_weights_aug_18NET_150.h5')
-    X_testr,_,testDict = dataLoad2.dataload("e:/pic/test",img_rows,img_cols,gray=0)
+    # model.save_weights('perimt.h5')
+    X_testr,_,testDict = dataLoad2.dataload("d:/data/permit/test",img_rows,img_cols,gray=0)
     import cv2
 
     X_testr = X_testr.astype('float32')
@@ -114,14 +115,12 @@ else:
 
 
     # 写入数据
-    csvFile = open("res7.csv", "w",newline ='')
-    writer = csv.writer(csvFile, dialect = "excel")
+
     # 写入的内容都是以列表的形式传入函数
     for index,value in enumerate(classes):
-        output[testDict[index]]=np.argmax(value)+1
-        writer.writerow([testDict[index],np.argmax(value)+1])
+        output[testDict[index]]=np.argmax(value)
         # cv2.imwrite('C:/tempProjects/keras-resnet/vali7/'+str(np.argmax(value)+1)+'_'+testDict[index]+'.jpg', X_testre[index])
-        cv2.imwrite('d:/git/keras-resnet/vali7/'+str(np.argmax(value)+1)+'_'+testDict[index]+'.jpg', X_testre[index])
+        cv2.imwrite('d:/git/keras-resnet/vali9/'+str(np.argmax(value)+1)+'_'+testDict[index]+'.jpg', X_testre[index])
 
     print("write over")
 
