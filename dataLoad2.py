@@ -5,13 +5,15 @@ import numpy as np
 from collections import defaultdict
 
 
-def dictload(img_dirpath = 'e:/pic/train'):
+def dictload(img_dirpath = 'd:/data/permit/train'):
     labelDict = dict()
+    labelDict_inverse = dict()
     label=0
     for fileDirName in os.listdir(img_dirpath):
         labelDict[fileDirName] = label
+        labelDict_inverse[label]= fileDirName
         label=label+1
-    return labelDict
+    return labelDict,labelDict_inverse
 def testdictload(dirpath = 'data/train.txt'):
     f = open(dirpath, "r")
     picDict = list()
@@ -31,7 +33,7 @@ def testdictload(dirpath = 'data/train.txt'):
     return picDict
 
 def dataload(img_dirpath= "e:/pic/train",img_w=300,img_h=300,val_ratio = 0.95,gray=0):
-    labelDict= dictload()
+    labelDict,labelDict_inverse= dictload()
 
     X_train = []
     y_train=[]
@@ -47,7 +49,10 @@ def dataload(img_dirpath= "e:/pic/train",img_w=300,img_h=300,val_ratio = 0.95,gr
                 if gray==1:
                     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
                     img = cv2.cvtColor(img_gray, cv2.COLOR_GRAY2RGB)
-                img = cv2.resize(img, (img_w, img_h))
+                try:
+                    img = cv2.resize(img, (img_w, img_h))
+                except:
+                    cv2.imwrite("err.jpg",img)
                 img = img.astype(np.float32)
                 X_train.append(img)
                 y_train.append(labelDict[fileDirName])
@@ -59,7 +64,7 @@ def dataload(img_dirpath= "e:/pic/train",img_w=300,img_h=300,val_ratio = 0.95,gr
     y_val = y_val.astype(np.int32)
     y_val = np.reshape(y_val,(len(y_val),1))
     y_train = np.reshape(y_train,(len(y_train),1))
-    return X_train,y_train,labelDict
+    return X_train,y_train,labelDict_inverse
 
 
 def testLoad(img_w=300,img_h=300,val_ratio = 0.95):
